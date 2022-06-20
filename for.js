@@ -39,12 +39,14 @@ for (let i = 9; i > 0; i -= 2) {
 }
 
 const arr = [10, 9, 8, 7, 6];
-for (let i = 0; i < arr.length; i++) { // grab 0, 0<5(true), print arr[0](iterate extract, first position), then add +1( =1). Then keep going until x<5==false
+for (let i = 0; i < arr.length; i++) {
+  // grab 0, 0<5(true), print arr[0](iterate extract, first position), then add +1( =1). Then keep going until x<5==false
   console.log(arr[i]);
 }
 
+// Total sum of the array
 const myArr = [2, 3, 4, 5, 6];
-let total = 0; 
+let total = 0;
 for (let i = 0; i < myArr.length; i++) {
   total += myArr[i];
 }
@@ -66,11 +68,50 @@ position[0]
 // total = 2 + 3 = 5
 // i = 2
 
-// 2 < 4 
+// 2 < 4
 // total = 5 + 4 = 9
 // i = 3
 
 // total = 20
 
+// Looping / iterating throught each array element
 
+array_one = [1, 2, 3, 4, 5];
+// this iterates throught each element, keyword .length.
+// Will keep validating numbers that are within the lenght, from 0 to 5, so grabing all positions
+// Then, with [], grab that position
+// Keep looping with i++
+for (let i = 0; i < array_one.length; i++) {
+  console.log(array_one[i]);
+}
 
+// Looping throught an array of arrays
+const array_two = [
+  [1, 2],
+  [3, 4],
+  [5, 6], // length = 3
+];
+
+for (let i = 0; i < array_two.length; i++) {
+  // will grab positions 0 1 2 (3 positions, all arrays)
+  for (let j = 0; j < array_two[i].length; j++) {
+    // here we grab the child array with parent[], from the previous position grabbed in line above
+    console.log(array_two[i][j]);
+  }
+}
+
+function multiplyAll(arr) { // a function that takes an array, that multiplies all elements
+  let product = 1; // result, store the carry values
+  for (let i = 0; i < arr.length; i++) { // first loop, that iterates throught the array lenght[]
+    for (let j = 0; j < arr[i].length; j++) { // this will run run, then j++, until false, then return to frist for loop and i++
+      product = product * arr[i][j]; // 00 01 02, 10 11 12, 20 21 22 23
+    }
+  }
+  return product;
+}
+
+multiplyAll([
+  [1, 2],
+  [3, 4],
+  [5, 6, 7],
+]);
