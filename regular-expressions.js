@@ -113,6 +113,7 @@ let result73 = quoteSample.match(myRegex);
 ////______________________________________________
 // find characters that occur one or more times within a uncut string
 // string of character must be consecutive
+// must occur 1 or more times. E.g aa+ in (aahh, alpha, amazon, amazing, aaos, aakiaak) will be true only in (aahh, aaos, aakiaak)
 
 /a+/g;
 // in "alpha, kilo", would return ["a"]
@@ -126,6 +127,7 @@ console.log(difficultSpelling.match(myRegex));
 
 //______________________________________________
 // * matches characters that occur zero or more times
+// that occurs zero or more times. eg. f* in (falcon, ballon, fake) will return true for all
 
 let soccerWord = "gooooooooal!";
 let gPhrase = "gut feeling";
@@ -169,7 +171,7 @@ storyRegex.test(noEnding); // false
 //______________________________________________
 // Match ALL letters and numbers shortcut
 //     \w is = [A-Za-z0-9_] (note it alos includes underscore _), and upper/lower case
-/\w/g
+/\w/g;
 
 // \w opposite is \W (all NON letters and numbers) ([^A-Za-z0-9_]) = @#$%& etc
 let test = /\W/;
@@ -177,17 +179,104 @@ let test = /\W/;
 // all numbers = \d
 let movieName = "2001: A Space Odyssey";
 let numRegex = /\d/g;
-console.log(movieName.match(numRegex).length)
+console.log(movieName.match(numRegex).length);
 // 4
 
 // all NON numbers = \D
 
 //______________________________________________
-// restrict possible usernames
+// matching whitespace or spaces between letters, and also carriage return, tab, form feed, new line characters
+// ( \s )
 
+let phrase = "He was very smart";
+let findRegex = /\s/g;
+phrase.match(findRegex); // [" ", " ", " "]
 
+// Everything expect whitespace = \S
+// will not match whitespace, carriage return, tab, form feed, and new line characters
 
+let findRegex2 = /\S/g;
+phrase.match(findRegex2).lenght; // 14
+phrase.match(findRegex2);
+/*
+["H",
+"e",
+"w",
+"a",
+.......
+]
+*/
 
+//______________________________________________
+// Quantity specifiers {}
+// 2 numbers in the {}, for the lower and upper range of matches
+// e.g. to match aaaah would be /a{3,5}h/
 
+let ohStr = "Ohhh no";
+let ohRegex = /oh{3,6}\sno/gi; // match o h(3-6 times) whitespace no (upper/lower case, as many times)
+let result7 = ohRegex.test(ohStr);
+
+// Only specificing one range {X,} or {,X}
+
+let haStr = "Hazzzzah";
+let haRegex = /Haz{4,}ah/;
+let result55 = haRegex.test(haStr);
+
+// Only specificing a single times it repeats {X}
+
+let timStr = "Timmmmber";
+let timRegex = /Tim{4}ber/;
+let result99 = timRegex.test(timStr);
+
+//______________________________________________
+// Check for possible existence of an element with a question mark ( ? )
+let american = "color";
+let british = "colour";
+let rainbowRegex = /colou?r/; // [ u? ] Return if it exists, or also if it doens't
+// colo[]r, or colo[u]r
+rainbowRegex.test(american); // true
+rainbowRegex.test(british); // true
+
+let favWord = "favorite";
+let favRegex = /favou?rite/;
+let result22 = favRegex.test(favWord);
+
+//______________________________________________
+// Positive and Negative Lookahead
+// looks ahead in the string for matches
+// Positive (?=pattern) : requires element to match a pattern, but won't return that pattern, just checking
+// Negative (?!pattern) : requires pattern not to be matched
+
+let quit = "qu";
+let quRegex = /q(?=u)/;
+console.log(quit.match(quRegex)); // q
+
+let noquit = "qu";
+let qRegex = /q(?!u)/; // null, it does have u
+console.log(noquit.match(qRegex));
+
+let noquit1 = "qz";
+let qRegex1 = /q(?!u)/; // q, it does not have u
+console.log(noquit.match(qRegex1));
+
+let password = "abc123";
+let checkPass = /(?={3,6})(?=\D*\d)/; // (it must have all characters * 3-6)(it must have non-numbers 0 or more times -- and one number)
+checkPass.test(password);
+
+// Use lookaheads in the pwRegex to match passwords that are greater than 5 characters long, and have two consecutive digits.
+let sampleWord = "astronaut";
+let pwRegex = /(?=\w{5,})(?=\D{3}\d+)/; // Change this line
+let result74 = pwRegex.test(sampleWord);
+
+//______________________________________________
+// Check for mixed groupings
+
+let testStr = "Pumpkin";
+let testRegex = /P(engu|umpk)in/;
+testRegex.test(testStr); // TEST
+
+let myString4 = "Franklin D. Roosevelt"; //Check for first + last name, optional middle name
+let myRegex4 = /^(Eleanor|Franklin)(\s*)(.*)(\s)Roosevelt$/; // (Eleanor or Franklin)(0 or more space)(0 or more all character (D.)(Darwin))(mandatory space(will be there either way)(Roosvelt last name)) (case sensivite)
+let result44 = myRegex.test(myString);
 
 
