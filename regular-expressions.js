@@ -279,4 +279,46 @@ let myString4 = "Franklin D. Roosevelt"; //Check for first + last name, optional
 let myRegex4 = /^(Eleanor|Franklin)(\s*)(.*)(\s)Roosevelt$/; // (Eleanor or Franklin)(0 or more space)(0 or more all character (D.)(Darwin))(mandatory space(will be there either way)(Roosvelt last name)) (case sensivite)
 let result44 = myRegex.test(myString);
 
+//______________________________________________
+// Reuse patterns w/ Capture groups
+// Capture groups can be used to find repeated strings
+// constructed by enclosing the regex pattern to be captured in parentheses ()
+// /(\w+)/
 
+let repeatNum = "42 42 42";
+let reRegex0 = /^(\d+) \1 \1$/; // Change this line
+let result11 = reRegex.test(repeatNum);
+
+let testString1 = "test test test";
+let reRegex1 = /(test)(\s)\1\2\1/;
+let result144 = reRegex.test(testString);
+
+let testString2 = "test test test test test test";
+let reRegex2 = /(test)(\s)\1\2\1/g;
+let result53 = reRegex.test(testString);
+
+// Capture groups to search and replace
+let address4 = "123 James St Apt 5F, Juniper, MV 11534";
+let changeText = /5F/;
+console.log(address.replace(changeText, "8C"));
+
+console.log("Suliver Susan".replace(/(\w+)\s(\w+)/, "$2 $1"));
+// Susan Suliver
+
+let str = "one two three";
+let fixRegex = /(\w+)(\s)(\w+)\2(\w+)/;
+let replaceText = "$4 $3 $1";
+let result52 = str.replace(fixRegex, replaceText);
+
+//______________________________________________
+// Remove Whitespace from Start and End
+
+let hello = "   Hello, World!  ";
+let wsRegex = /(\s+)(\s+)/;
+let result83 = hello.replace(wsRegex, "").replace(wsRegex, "");
+console.log(result);
+
+let hello896 = "   Hello, World!  ";
+let wsRegex896 = /^\s+|\s+$/g; // Change this line
+let result896 = hello.replace(wsRegex, ""); // Change this line
+console.log(result);
