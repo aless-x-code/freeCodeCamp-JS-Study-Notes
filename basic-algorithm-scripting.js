@@ -185,32 +185,42 @@ console.log(getIndexToIns([40, 60], 50));
 //_____________________________________________________
 // compare 2 strings in an array, return true if first words has all the characters of word 2
 
-
 function mutation(arr) {
   let word0 = arr[0].split("");
   let word1 = arr[1].split(""); // array into 2 words; word0 and word1
 
-  const word0Lower = word0.map(word0 => word0.toLowerCase());
-  const word1Lower = word1.map(word1 => word1.toLowerCase()); // lower casing word, for standarization
-
+  const word0Lower = word0.map((word0) => word0.toLowerCase());
+  const word1Lower = word1.map((word1) => word1.toLowerCase()); // lower casing word, for standarization
 
   let matchingCharacters = []; // basket of matching characters
-  for (let i = 0; i < word0Lower.length; i++) { // iterating through word0
-    if (word1Lower.indexOf(word0Lower[i]) >= 0) { // if word0 characters are in word1 ....
+  for (let i = 0; i < word0Lower.length; i++) {
+    // iterating through word0
+    if (word1Lower.indexOf(word0Lower[i]) >= 0) {
+      // if word0 characters are in word1 ....
       matchingCharacters.push(word0Lower[i]); // push matching characters into basket
     }
   }
   console.log(matchingCharacters); // matching characters
 
-  const containsAll = word1Lower.every(element => { // if all elements of word1 are in matchign character's basket, return true
+  const containsAll = word1Lower.every((element) => {
+    // if all elements of word1 are in matchign character's basket, return true
     return matchingCharacters.indexOf(element) !== -1;
   });
-  return(containsAll); 
-
+  return containsAll;
 }
 
-console.log(mutation(["zyxwvutsrqponmlkjihgfedcba", "qrstu"])); 
-
+console.log(mutation(["zyxwvutsrqponmlkjihgfedcba", "qrstu"]));
 
 //_____________________________________________________
-// 
+// Chunky Monkey
+
+function chunkArrayInGroups(arr, size) {
+  // Break it up.
+  let newArr = [];
+  for (let i = 0; i < arr.length; i += size) {
+    newArr.push(arr.slice(i, i + size));
+  }
+  return newArr;
+}
+
+console.log(chunkArrayInGroups(["a", "b", "c", "d"], 2));
