@@ -201,7 +201,6 @@ Dog.prototype = Object.create(Animal.prototype);
 
 let beagle3 = new Dog();
 
-
 //_______________________________________________________
 // prototype inherited constructors
 
@@ -220,20 +219,92 @@ Dog.prototype.constructor = Dog;
 // Adding own methods to objects
 // besides inherited prototypes, you can assign objects their own
 
-Dog.prototype.bark = function() {
+Dog.prototype.bark = function () {
   console.log("Woof!");
-} // it will only embebbed in Dog constructs, as bark
+}; // it will only embebbed in Dog constructs, as bark
 
 //_______________________________________________________
 // overriding inherited methods
 
 // you just create another method for that object, using the inherited protperty name
 
-Dog.prototype.eat = function() {
+Dog.prototype.eat = function () {
   return "gulp gulp";
+};
+
+//_______________________________________________________
+// Adding selected methods to unrelated objects, avoiding inheriting all properties
+// Mixin
+
+let flyMixin = function (obj) {
+  // Mixin function takes an object and gives it the fly method / property
+  obj.fly = function () {
+    // then, object's property should = console.log ...
+    console.log("Flying, wooosh!");
+  };
+};
+
+flyMixin(bird); // giving fly property to bird object
+
+console.log(bird.fly()); // Flying, wooosh!
+
+let bird = {
+  name: "Donald",
+  numLegs: 2,
+};
+
+let boat = {
+  name: "Warrior",
+  type: "race-boat",
+};
+
+let glideMixin = function (obj) {
+  obj.glide = function () {
+    console.log("sssshiiiissss, oooouuuuuuu");
+  };
+};
+
+glideMixin(bird);
+glideMixin(boat);
+
+console.log(bird.glide(), boat.glide());
+
+//_______________________________________________________
+// Preventing values inside object from being modified
+
+// values inside object can be modified externally, e.g.
+user1.password = "its_now_my_password_buahahaha";
+// this are called public properties, since it can be accessed and changed from the outside
+
+function Passwords() {
+  //constructor
+  let password = 1234; // key and value
+
+  this.getPassword = function () {
+    // this will be used in this exercise to return the local variable
+    return password;
+  };
 }
+let user745Password = new Passwords(); // new object using constructor
+user745Password.password = 1111; // attempting to change password
+console.log(user745Password.getPassword()); // 1234
+// usucssesful becuase can't access local/private varibale
 
 
+//____________________________________________________________
+// Understand the Immediately Invoked Function Expression (IIFE)
 
+(function () {
+  console.log("Chirp, chirp!");
+})();
+
+// this will console.log immediatly
+// the specific point at which it runs is at the double parentesis at the very end of the function "()"
+
+// it will be runnned, without being defined, or assigned a varibale
+// without a variable, it will be an annonymus function
+
+//____________________________________________________________
+// 
 
 
