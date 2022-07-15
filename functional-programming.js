@@ -200,3 +200,194 @@ const new_s = s.myFilter(function (item) {
 });
 
 console.log(new_s);
+
+//____________________________________________________________
+// Splice
+// mutates original array
+
+// first argument, where to begin splicing
+// second argument, how many items to splice
+// if no second argument, default is to splice until the end
+
+//____________________________________________________________
+// .concat
+// join items end to end
+
+//____________________________________________________________
+// .reduce
+
+function getRating(watchList) {
+  let christopherNolan = watchList.filter(
+    (movie) => movie.Director == "Christopher Nolan"
+  ); // filters only the movies that have Christopher Nolan as director
+  let averageRating = christopherNolan.reduce(
+    (sum, movie) => sum + Number(movie.imdbRating / christopherNolan.length),
+    0
+  ); // average rating of Christopher Nolan movies
+  return averageRating;
+}
+
+console.log(getRating(watchList));
+
+//____________________________________________________________
+// only square positive and whole numbers
+
+const squareList = (arr) => {
+  let positiveIntergers = arr.filter(
+    (number) => number >= 0 && number % 1 == 0
+  ); // filters array for positive numbers, and that are whole
+  let square = positiveIntergers.map((num) => num * num);
+  return square;
+};
+
+const squaredIntegers = squareList([-3, 4.8, 5, 3, -3.2]);
+console.log(squaredIntegers);
+
+//____________________________________________________________
+// .sort method
+// JavaScript's default sorting method is by string Unicode point value, which may return unexpected results. Therefore, it is encouraged to provide a callback function to specify how to sort the array items
+
+function alphabeticalOrder(arr) {
+  return arr.sort(function (a, b) {
+    return a === b ? 0 : a > b ? 1 : -1;
+  });
+}
+console.log(alphabeticalOrder(["a", "d", "c", "a", "z", "g"]));
+
+// condition ? T : F
+
+//____________________________________________________________
+// .sort method, functional programming
+
+const globalArray = [5, 6, 3, 2, 9];
+
+function nonMutatingSort(arr) {
+  let newArr = [...arr];
+  return newArr.sort(function (a, b) {
+    return a === b ? 0 : a > b ? 1 : -1;
+  });
+}
+
+console.log(nonMutatingSort(globalArray));
+
+//____________________________________________________________
+// The split method splits a (string) => (array of strings)
+sampleArray.split(""); //< "delimiter"
+
+// if delimeter is a space => split into words
+// if delimiter is empty => split in characters
+
+const str = "Hello World";
+const bySpace = str.split(" ");
+["Hello", "World"];
+
+const otherString = "How9are7you2today";
+const byDigits = otherString.split(/\d/);
+["How", "are", "you", "today"];
+
+function splitify(str) {
+  return str.split(/\W/);
+}
+console.log(splitify("Hello World,I-am code"));
+["Hello", "World", "I", "am", "code"];
+
+//____________________________________________________________
+// join
+// unites a array
+
+function sentensify(str) {
+  let words = str.split(/\W/);
+  return words.join(" ");
+}
+
+console.log(sentensify("May-the-force-be-with-you"));
+
+//____________________________________________________________
+// URL Slug
+// turn a string into a url blueprint
+// how to learn JS => how-to-learn-js
+
+function urlSlug(title) {
+  let trim = title.trim(); // trim whitespace from beggining and at end
+  let words = trim.split(/\W+/); // string into an array of words, eliminating extra whitespaces
+  let lowerCase = words.map((word) => word.toLowerCase()); // lowercase words
+  return lowerCase.join("-"); // join lowerCase by -
+}
+console.log(urlSlug(" Winter Is  Coming"));
+
+//____________________________________________________________
+// every method check if ALL the elements passes a test, return true if all meet, false if 1 or more not pass
+
+const numbers = [1, 5, 8, 0, 10, 11];
+
+numbers.every(function (currentValue) {
+  return currentValue < 10; // only if all numbers are less than 10
+});
+// false
+
+function checkPositive(arr) {
+  return arr.every(function (num) {
+    return num >= 0; // only if numbers are positive
+  });
+}
+checkPositive([1, 2, 3, -4, 5]);
+// false
+
+//____________________________________________________________
+// .some method
+// check if at ONE or more, at the least, pass the test
+
+function checkPositive(arr) {
+  return arr.some(function (num) {
+    return num >= 0;
+  });
+}
+checkPositive([1, 2, 3, -4, 5]);
+// positive
+
+//____________________________________________________________
+// Currying and Partial Application in functions
+
+// arity of a function means the arguments it requires to complete
+function sample(x, y) {}
+// here, arity would be 2 arguments, x and y
+
+// Currying a function means to convert a function of X arity into functionS of 1 arity
+function unCurried(x, y) {
+  return x + y;
+}
+
+function curried(x) {
+  return function (y) {
+    return x + y;
+  };
+}
+curried(1)(2);
+
+// this is useful when you can't yet supply all arguments to a function of +1 arity
+// rather, you can store the a function in a varibale and supply the next function arity when available
+
+const funcForY = curried(1); // first argument, and stored
+console.log(funcForY(2)); // run with second argument [first argument is already stored]
+
+// PARTIAL application function has more than 1 arity, but, you apply a partial arguments, then run it will full arguments
+
+function impartial(x, y, z) {
+  return x + y + z;
+}
+
+const partialFn = impartial.bind(this, 1, 2);
+partialFn(10); // 13
+
+// example currying
+
+function add_currying(x) {
+  return function (y) {
+    return function (z) {
+      return x + y + z;
+    };
+  };
+}
+
+console.log(add_currying(10)(20)(30));
+// 60
