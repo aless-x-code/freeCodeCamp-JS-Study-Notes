@@ -54,3 +54,71 @@ function destroyer(arr) {
 }
 
 console.log(destroyer([1, 2, 3, 1, 2, 3], 2, 3));
+
+//____________________________________________________________
+// from collection, return source's full object
+
+function whatIsInAName(collection, source) {
+  let pairs = Object.entries(source);
+  return collection.filter((object) =>
+    pairs.every(([key, value]) => object[key] === value)
+  );
+}
+
+whatIsInAName(
+  [
+    { first: "Romeo", last: "Montague" },
+    { first: "Mercutio", last: null },
+    { first: "Tybalt", last: "Capulet" },
+  ],
+  { last: "Capulet" }
+);
+
+//____________________________________________________________
+// url slug
+
+function spinalCase(str) {
+  let sentence = str.replace(/([a-z])([A-Z])/g, "$1 $2"); // turns a camel case string into a sentence: grab (lower case character) followed by a (upper case character), e.g. sI, all of the cases (g), and return () space () = ..s I..
+  let words = sentence.split(" "); // grab a normal sentence into a array of words
+  let lowerCase = words.map((word) => word.toLowerCase()); // lowercase words
+  let spinalTap = lowerCase.join("-"); // join by dashes
+  let finalTouch = spinalTap.replace(/_/g, "-"); // if at this point the string has _, replace it by -
+  return finalTouch;
+}
+
+console.log(spinalCase("The_Andy_Griffith_Show"));
+// the-andy-griffith-show
+
+//____________________________________________________________
+//
+/*
+
+1. if word starts with consonant, consonant(s) to the end + "ay"
+
+1. if word starts with vowel, add "way" to the end
+
+*/
+
+function translatePigLatin(str) {
+  let vowel = /^[aeoiu]/; // defining a word that starts with a vowel
+  let consonant = /^[^aeoiu]/; // defining a word that doesn't start with a vowel
+
+  if (vowel.test(str)) {
+    // if vowel test is true ...
+    return str.concat("way"); // attach "way" to the end
+  } else if (consonant.test(str)) {
+    // if consonant test is true ...
+    return str.replace(/(^[^aeoiu]+)(.*)/, "$2$1").concat("ay");
+    // replace regex: begginng at (consonants of 1 or more)(and IF ANY following characters that weren't in the cluster), with putting cluster at the end, swapping positions, and then attach "ay"
+  } else {
+    return "value not accepted";
+  }
+}
+
+console.log(translatePigLatin("rhythm"));
+
+// rhythmay
+
+//____________________________________________________________
+//
+
