@@ -120,5 +120,75 @@ console.log(translatePigLatin("rhythm"));
 // rhythmay
 
 //____________________________________________________________
-//
+// replace a string word with a given word, mindind case sensitivity
 
+function myReplace(str, before, after) {
+  let wordArray = after.split(" "); // split into array for lowercasing
+  let afterLower = wordArray.map((letter) => letter.toLowerCase()).join(); // lowercasing / standarizing replacement word
+
+  let titleCase = /^[A-Z]/; // defining a title case word
+
+  function toTitleCase(str) {
+    // titlecasing function
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map(function (word) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(" ");
+  }
+
+  if (titleCase.test(before)) {
+    // if word to be replace is titlecase ...
+    var afterTitleCase = toTitleCase(afterLower);
+    return str.replace(before, afterTitleCase); // make replacement titlecase
+  } else {
+    return str.replace(before, afterLower); // if word to be replace is lowercase, swap it by replacement
+  }
+}
+
+console.log(myReplace("His name is Tom", "Tom", "john"));
+// His name is John
+// case sensitive
+
+//____________________________________________________________
+// return DNA pairs
+
+function pairElement(str) {
+  let dnaArray = [...str]; // dna string paramenter into array
+
+  let pairs = []; // pair storage
+
+  for (let i = 0; i < dnaArray.length; i++) {
+    // iterating through dna bases argument
+    if (dnaArray[i] == "A") {
+      // if base is X,
+      pairs.push([dnaArray[i], "T"]); // push [base, respective pair]
+    } else if (dnaArray[i] == "T") {
+      // other base cases
+      pairs.push([dnaArray[i], "A"]);
+    } else if (dnaArray[i] == "C") {
+      pairs.push([dnaArray[i], "G"]);
+    } else if (dnaArray[i] == "G") {
+      pairs.push([dnaArray[i], "C"]);
+    } else {
+      return "not a valid input";
+    }
+  }
+
+  return pairs;
+}
+
+console.log(pairElement("ATCGA"));
+// [["A","T"],["T","A"],["C","G"],["G","C"],["A","T"]]
+
+/*
+
+ A T
+ T A
+
+ G C
+ C G
+
+*/
