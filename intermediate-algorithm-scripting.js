@@ -192,3 +192,85 @@ console.log(pairElement("ATCGA"));
  C G
 
 */
+
+//____________________________________________________________
+// find missing letter of abc strand
+
+function fearNotLetter(str) {
+  let abc = "abcdefghijklmnopqrstuvwxyz".split(""); // an array of the alphabet
+  let input = str.split(""); // array of alphabet strand
+
+  let startR = input[0]; // first letter of alphabet strand
+  let endR = input[input.length - 1]; // last letter of alphabet strand
+
+  let officialStrand = abc.slice(
+    abc.indexOf(input[0]),
+    abc.indexOf(input[input.length - 1]) + 1
+  ); // target offical alphabet strand, from first letter and last letter range of input
+
+  for (let i = 0; i < officialStrand.length; i++) {
+    // iterate throught offical strand
+    if (input.indexOf(officialStrand[i]) >= 0) {
+    } else if (input.indexOf(officialStrand[i]) == -1) {
+      // if input strand letter does not matches offical, return the missing letter
+      return officialStrand[i];
+    }
+  }
+}
+
+console.log(fearNotLetter("abcdefghjklmno"));
+
+//____________________________________________________________
+// return unique values between N array(s)
+
+function uniteUnique(arr) {
+  let values = [];
+  for (let i = 0; i < arguments.length; i++) {
+    values = values.concat(arguments[i]); // iterate through arguments and concate them into one array
+  }
+  return [...new Set(values)]; // return only unique values
+}
+
+console.log(uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]));
+
+//____________________________________________________________
+// convert characters into HTML slang
+
+function convertHTML(str) {
+  let characters = str.split(""); // make arguments into an array of its characters
+
+  let htmlArray = [];
+  for (let i = 0; i < characters.length; i++) {
+    if (characters[i] == "&") {
+      htmlArray.push("&amp;");
+    } else if (characters[i] == "<") {
+      htmlArray.push("&lt;");
+    } else if (characters[i] == ">") {
+      htmlArray.push("&gt;");
+    } else if (characters[i] == '"') {
+      htmlArray.push("&quot;");
+    } else if (characters[i] == "'") {
+      htmlArray.push("&apos;");
+    } else {
+      htmlArray.push(characters[i]);
+    }
+  }
+
+  return htmlArray.join("");
+}
+
+console.log(convertHTML("Dolce & Gabbana"));
+
+//____________________________________________________________
+// testtttingg
+
+function sumFibs(num) {
+  let fibonacci = [1, 1];
+  for (let i = 0; i <= 5; i++) {
+    fibonacci.push(fibonacci[i] + fibonacci[1 + i]);
+  }
+
+  console.log(fibonacci);
+}
+
+console.log(sumFibs(4));
