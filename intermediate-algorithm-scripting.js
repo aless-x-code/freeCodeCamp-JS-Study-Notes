@@ -262,15 +262,133 @@ function convertHTML(str) {
 console.log(convertHTML("Dolce & Gabbana"));
 
 //____________________________________________________________
-// testtttingg
+// sum all off fibonacci numbers
+// fibonnaci is an array that starts with ... [1, 1, n]
+// and then sums the previous two numbers
+// fibonacci range 7 = [1, 1, 2, 3, 5, 8, 13]
+// return the sum of fibonacci numbers that are <= to num, and that are odd
 
 function sumFibs(num) {
-  let fibonacci = [1, 1];
-  for (let i = 0; i <= 5; i++) {
-    fibonacci.push(fibonacci[i] + fibonacci[1 + i]);
+  let fibonacci = [1, 1]; // initial fibonacci set up
+  for (let i = 0; i <= num; i++) {
+    // iterate throught 0-num
+    fibonacci.push(fibonacci[i] + fibonacci[1 + i]); // push index i and i+1, so previous 2 numbers sum, until equal or less than number
   }
 
-  console.log(fibonacci);
+  let fiboOdd = [];
+  for (let i = 0; i < fibonacci.length; i++) {
+    if (fibonacci[i] % 2 != 0 && fibonacci[i] <= num) {
+      // if fibonacci is odd and less or equal to num, push it to odd storage
+      fiboOdd.push(fibonacci[i]);
+    }
+  }
+
+  let fiboOddSum = 0;
+  for (let i = 0; i < fiboOdd.length; i++) {
+    fiboOddSum += fiboOdd[i]; // sum odd storage
+  }
+
+  return fiboOddSum;
 }
 
-console.log(sumFibs(4));
+console.log(sumFibs(1));
+
+//____________________________________________________________
+// find least common multiple LCM of a given array
+
+function smallestCommons(arr1) {
+  let sorted = arr1.sort(function (a, b) {
+    return a === b ? 0 : a > b ? 1 : -1; // sort the parameter in order
+  });
+
+  let range = [];
+  for (let i = sorted[0]; i <= sorted[1]; i++) {
+    // print the range of numbers between arguments
+    range.push(i);
+  }
+
+  function gcd(a, b) {
+    // GCD (greates common divisor) for LMC formula
+    if (b == 0) return a;
+    return gcd(b, a % b);
+  }
+
+  function findLCM(arr) {
+    let lcm = arr[0];
+    // initializing answer
+
+    for (let i = 1; i < arr.length; i++) {
+      // iterate through range of paramters
+      // after i'th iteration,
+      lcm = (arr[i] * lcm) / gcd(arr[i], lcm);
+    }
+    return lcm;
+  }
+
+  return findLCM(range);
+}
+
+console.log(smallestCommons([13, 1]));
+// log 360360
+
+//____________________________________________________________
+// flatten an array
+
+function steamrollArray(arr) {
+  console.log(...arr); // returns the array as nested elements => 1 [ 2 ] [ 3, [ [ 4 ] ] ]
+  let flat = [].concat(...arr); // return array, and attach to it the ...arr array
+  let superFlat = [].concat(...flat); // do the same, but deeper
+  let hyperFlat = [].concat(...superFlat); // do the same, but deeper
+  return hyperFlat;
+}
+
+console.log(steamrollArray([1, [2], [3, [[4]]]]));
+// [1, 2, 3, 4]
+
+//____________________________________________________________
+// binary code to english
+
+console.log(parseInt("01000001", 2)); // parseInt converts string to binary number (65), parameters: string, radix
+console.log(String.fromCharCode(65)); // String.fromCharCode is an inventory of characters, in this case 65 = A
+
+function binaryAgent(str) {
+  let words = str.split(" "); // split into an array of binary words
+
+  let secrets = words.map((item) => String.fromCharCode(parseInt(item, 2))); // maps items and convert them into words
+  return secrets.join(""); // join array
+}
+
+console.log(
+  binaryAgent(
+    "01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111"
+  )
+);
+
+//____________________________________________________________
+// check if certain values are ===true for all properties
+// in this case: check if name is true for all objects
+
+function truthCheck(collection, pre) {
+  // predicade
+  let values = []; // storage of predicade values
+  for (let i = 0; i < collection.length; i++) {
+    // iterate throght collection
+    values.push(collection[i][pre]); // push collection[0][names]
+  }
+  let positivity = values.every((item) => !!item); // are all values true? => !!element
+  return positivity; // true
+}
+
+console.log(
+  truthCheck(
+    [
+      { name: "Quincy", role: "Founder", isBot: false },
+      { name: "Naomi", role: "", isBot: false },
+      { name: "Camperbot", role: "Bot", isBot: true },
+    ], // collection
+    "name" // test property
+  )
+);
+
+//____________________________________________________________
+// 

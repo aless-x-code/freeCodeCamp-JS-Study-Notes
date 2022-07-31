@@ -196,7 +196,6 @@ function getArrayOfUsers(obj) {
 
 console.log(getArrayOfUsers(users3));
 
-//____________________________________________
-// Modify an array inside an object
+
 
 

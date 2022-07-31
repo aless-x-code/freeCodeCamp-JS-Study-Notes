@@ -352,7 +352,7 @@ checkPositive([1, 2, 3, -4, 5]);
 function sample(x, y) {}
 // here, arity would be 2 arguments, x and y
 
-// Currying a function means to convert a function of X arity into functionS of 1 arity
+// Currying a function means to convert a function of X arity into functions of 1 arity
 function unCurried(x, y) {
   return x + y;
 }
