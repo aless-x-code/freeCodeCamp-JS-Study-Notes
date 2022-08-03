@@ -391,4 +391,66 @@ console.log(
 );
 
 //____________________________________________________________
+// optional arguments, if 2 arguments, sum them, if 1 argument, return a function that sums it with a later argument (topic: currying)
+
+function addTogether(x) {
+  if (
+    arguments.length == 1 && // if only 1 arguments is provided
+    typeof x === "number" && // and it is a number
+    Array.isArray(x) != true // and it is not an array
+  ) {
+    return function (y) {
+      // run a function with the second argument
+      if (Array.isArray(y) != true) {
+        // only if that argument is not an array
+        return x + y; // return first argument + second argument
+      }
+    };
+  } else if (
+    //
+    arguments.length == 2 && // if 2 arguments are provided
+    typeof arguments[0] === "number" &&
+    typeof arguments[1] === "number" && // and both are numbers
+    Array.isArray(arguments[1]) != true // and second arguments is not an array
+  ) {
+    return arguments[0] + arguments[1]; // return their sum
+  } else {
+    return undefined; // else, undefined
+  }
+}
+
+console.log(addTogether(2)([7]));
+
+//____________________________________________________________
+// Name changer
+
+const Person = function (firstAndLast) {
+  //  object constructor, parameter is first and last name
+  let fullName = firstAndLast; // our global variable
+
+  this.getFullName = function () {
+    return fullName; // return full name
+  };
+  this.getFirstName = function () {
+    return fullName.split(" ")[0]; // split name to first and last, and return first
+  };
+  this.getLastName = function () {
+    return fullName.split(" ")[1]; // split name to first and last, and return last
+  };
+  this.setFirstName = function (first) {
+    fullName = first + " " + this.getLastName(); // modify global variable, to input(first) + the lastNameFunction();
+  };
+  this.setLastName = function (last) {
+    fullName = this.getFirstName() + " " + last;
+  };
+  this.setFullName = function (firstAndLast) {
+    fullName = firstAndLast; // set global variable to new argument
+  };
+};
+
+const bob = new Person("Bob Ross"); // new object; parameter first and last name
+bob.setFirstName("Haskell"); // run function to change first name
+console.log(bob.getFullName()); // run function to get full name => Haskell Ross
+
+//____________________________________________________________
 // 
